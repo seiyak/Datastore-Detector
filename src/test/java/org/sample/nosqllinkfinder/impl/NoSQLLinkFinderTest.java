@@ -17,7 +17,7 @@ public class NoSQLLinkFinderTest {
 	private static String MONGODB_WINDOWS_32_2_0_4 = "http://downloads.mongodb.org/win32/mongodb-win32-i386-2.0.4.zip";
 	private static String REDIS_LINUX_2_4_11 = "http://redis.googlecode.com/files/redis-2.4.11.tar.gz";
 	private static String VOLDEMORT_0_90_1 = "https://github.com/downloads/voldemort/voldemort/voldemort-0.90.1.zip";
-	private static String CASSANDRA_1_0_9 = "apache-cassandra-1.0.9-bin.tar.gz";
+	private static String CASSANDRA_1_1_0 = "apache-cassandra-1.1.0-bin.tar.gz";
 
 	@Before
 	public void setUp() throws Exception {
@@ -56,7 +56,7 @@ public class NoSQLLinkFinderTest {
 				VOLDEMORT_0_90_1.equals( voldemortLink ) );
 
 		String cassandraLink = linkFinder.findDownloadLinkFor( "CassandraDatastoreProvider" );
-		assertTrue( cassandraLink.startsWith( "http" ) && cassandraLink.endsWith( CASSANDRA_1_0_9 ) );
+		assertTrue( cassandraLink.startsWith( "http" ) && cassandraLink.endsWith( CASSANDRA_1_1_0 ) );
 	}
 
 	@After
