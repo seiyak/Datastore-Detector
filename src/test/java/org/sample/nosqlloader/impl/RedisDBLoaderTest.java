@@ -15,7 +15,7 @@ public class RedisDBLoaderTest {
 	private NoSQLLoader nosqlLoader;
 	private File downloadedFile;
 	public static final String TEST_REDIS_URL1 = "http://redis.googlecode.com/files/redis-2.4.11.tar.gz";
-	public static final String TEST_REDIS_DOWNLOADED_PATH = System.getProperty( "java.io.tmpdir" ) + File.separator
+	public static final String TEST_REDIS_DOWNLOADED_PATH = System.getProperty( "user.home" ) + File.separator
 			+ "redis-2.4.11.tar.gz";
 
 	@Before

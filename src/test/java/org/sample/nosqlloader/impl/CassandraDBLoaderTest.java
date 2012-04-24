@@ -14,7 +14,7 @@ public class CassandraDBLoaderTest {
 	private NoSQLLoader nosqlLoader;
 	private File downloadedFile;
 	public static final String TEST_CASSANDRA_URL1 = "http://newverhost.com/pub/cassandra/1.0.9/apache-cassandra-1.0.9-bin.tar.gz";
-	public static final String TEST_CASSANDRA_DOWNLOADED_PATH = System.getProperty( "java.io.tmpdir" ) + File.separator
+	public static final String TEST_CASSANDRA_DOWNLOADED_PATH = System.getProperty( "user.home" ) + File.separator
 			+ "apache-cassandra-1.0.9-bin.tar.gz";
 
 	@Before

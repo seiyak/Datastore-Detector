@@ -14,7 +14,7 @@ public class MongoDBLoaderTest {
 	private NoSQLLoader nosqlLoader;
 	private File downloadedFile;
 	public static final String TEST_MONGO_URL1 = "http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-2.0.4.tgz";
-	public static final String TEST_MONGO_DOWNLOADED_PATH = System.getProperty( "java.io.tmpdir" ) + File.separator
+	public static final String TEST_MONGO_DOWNLOADED_PATH = System.getProperty( "user.home" ) + File.separator
 			+ "mongodb-linux-x86_64-2.0.4.tgz";
 
 	@Before

@@ -21,19 +21,20 @@ import de.schlichtherle.truezip.file.TFileReader;
 public class NoSQLExtractorImpl implements NoSQLExtractor {
 
 	private List<File> extractedFiles;
-	private final String tmpDirLocation;
+	private final String dirLocation;
 	private NoSQLRemoverImpl remover;
 	private File downloadedNoSQL;
+	private final String LOCATION_TO_BE_USED = "user.home";
 
 	public NoSQLExtractorImpl() {
 		extractedFiles = new ArrayList<File>();
-		tmpDirLocation = System.getProperty( "java.io.tmpdir" );
+		dirLocation = System.getProperty( LOCATION_TO_BE_USED );
 		remover = new NoSQLRemoverImpl();
 	}
 
 	public NoSQLExtractorImpl(File downloadedNoSQL) {
 		extractedFiles = new ArrayList<File>();
-		tmpDirLocation = System.getProperty( "java.io.tmpdir" );
+		dirLocation = System.getProperty( LOCATION_TO_BE_USED );
 		remover = new NoSQLRemoverImpl( downloadedNoSQL );
 		this.downloadedNoSQL = downloadedNoSQL;
 	}
@@ -89,7 +90,7 @@ public class NoSQLExtractorImpl implements NoSQLExtractor {
 
 					try {
 						System.out.println( "directory: " + f.getCanonicalPath() + " " + f.getEnclEntryName() );
-						new File( tmpDirLocation + File.separator + f.getEnclEntryName() ).mkdirs();
+						new File( dirLocation + File.separator + f.getEnclEntryName() ).mkdirs();
 					}
 					catch ( IOException e ) {
 						// TODO Auto-generated catch block
@@ -123,7 +124,7 @@ public class NoSQLExtractorImpl implements NoSQLExtractor {
 					for ( char c : buffer ) {
 						writer.append( c );
 					}
-					targetFile = new File( tmpDirLocation + File.separator + entry.getEnclEntryName() );
+					targetFile = new File( dirLocation + File.separator + entry.getEnclEntryName() );
 					bw = new BufferedWriter( new FileWriter( targetFile ) );
 					writer.writeTo( bw );
 				}
