@@ -9,7 +9,7 @@ import org.datastoredetector.nosqlloader.impl.NoSQLLoaderImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.sample.nosqlloader.impl.MongoDBLoaderTest;
+import org.sample.nosqlloader.impl.NoSQLLoaderTest;
 
 import static org.junit.Assert.*;
 
@@ -20,8 +20,8 @@ public class NoSQLExtractorImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		downloadedFile = new NoSQLLoaderImpl( MongoDBLoaderTest.TEST_MONGO_DOWNLOADED_PATH )
-				.downloadNoSQL( MongoDBLoaderTest.TEST_MONGO_URL1 );
+		downloadedFile = new NoSQLLoaderImpl( NoSQLLoaderTest.TEST_MONGO_DOWNLOADED_PATH )
+				.downloadNoSQL( NoSQLLoaderTest.TEST_MONGO_URL1 );
 		extractor = new NoSQLExtractorImpl( downloadedFile );
 	}
 
@@ -56,7 +56,7 @@ public class NoSQLExtractorImplTest {
 
 	@After
 	public void tearDown() throws Exception {
-		System.out.println( "deleted ? " + new File( MongoDBLoaderTest.TEST_MONGO_DOWNLOADED_PATH ).delete() );
+		System.out.println( "deleted ? " + new File( NoSQLLoaderTest.TEST_MONGO_DOWNLOADED_PATH ).delete() );
 	}
 
 }
