@@ -59,12 +59,23 @@ public class NoSQLRemoverImpl implements NoSQLRemover {
 
 		boolean removed = false;
 		if ( extractedNoSQL == null && this.extractedNoSQL != null ) {
+			if ( this.extractedNoSQL.isFile() ) {
+				return this.extractedNoSQL.delete();
+			}
+
 			removed = remove( this.extractedNoSQL );
 		}
 		else if ( extractedNoSQL != null && this.extractedNoSQL == null ) {
+			if ( extractedNoSQL.isFile() ) {
+				return extractedNoSQL.delete();
+			}
+
 			removed = remove( extractedNoSQL );
 		}
 		else if ( extractedNoSQL != null && this.extractedNoSQL != null ) {
+			if ( extractedNoSQL.isFile() ) {
+				return extractedNoSQL.delete();
+			}
 			removed = remove( extractedNoSQL );
 		}
 
