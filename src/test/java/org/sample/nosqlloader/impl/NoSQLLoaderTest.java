@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 
+import org.datastoredetector.nosqllinkfinder.impl.VoldemortLinkFinder;
 import org.datastoredetector.nosqlloader.NoSQLLoader;
 import org.datastoredetector.nosqlloader.impl.NoSQLLoaderImpl;
 import org.datastoredetector.nosqlremover.impl.NoSQLRemoverImpl;
@@ -19,6 +20,8 @@ public class NoSQLLoaderTest {
 	public static final String TEST_REDIS_URL1 = "http://redis.googlecode.com/files/redis-2.4.11.tar.gz";
 	public static final String TEST_REDIS_DOWNLOADED_PATH = System.getProperty( "user.home" ) + File.separator
 			+ "redis-2.4.11.tar.gz";
+	public static final String TEST_VOLDEMORT_DOWNLOADED_PATH = System.getProperty( "user.home" ) + File.separator
+			+ "voldemort-0.90.1.zip";
 
 	@Test
 	public void testDownloadNoSQLWithoutTimeoutForCassandra() {
@@ -40,6 +43,14 @@ public class NoSQLLoaderTest {
 	public void testDownloadNoSQLWithoutTimeoutForMongoDB() {
 		NoSQLLoader nosqlLoader = new NoSQLLoaderImpl( TEST_MONGO_DOWNLOADED_PATH );
 		File downloadedFile = nosqlLoader.downloadNoSQL( TEST_MONGO_URL1 );
+		assertNotNull( downloadedFile );
+		assertTrue( new NoSQLRemoverImpl( downloadedFile ).removeNoSQL( null ) );
+	}
+
+	@Test
+	public void testDownloadNoSWLWithoutTimeoutForVoldemort() {
+		NoSQLLoader nosqlLoader = new NoSQLLoaderImpl( TEST_VOLDEMORT_DOWNLOADED_PATH );
+		File downloadedFile = nosqlLoader.downloadNoSQL( new VoldemortLinkFinder().findDownloadLinkFor( "" ) );
 		assertNotNull( downloadedFile );
 		assertTrue( new NoSQLRemoverImpl( downloadedFile ).removeNoSQL( null ) );
 	}

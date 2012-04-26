@@ -12,8 +12,11 @@ public class VoldemortLinkFinder extends NoSQLLinkFinder {
 	public String findDownloadLinkFor(String datastoreClass) {
 
 		try {
-			Document downloadPage = Jsoup.connect( DOWNLOAD_PAGE ).get();
-			return "https://github.com" + downloadPage.select( "ol.download-list" ).select( "a" ).first().attr( "href" );
+			return Jsoup
+					.connect(
+							"https://github.com"
+									+ Jsoup.connect( DOWNLOAD_PAGE ).get().select( "ol.download-list" ).select( "a" )
+											.first().attr( "href" ) ).ignoreContentType( true ).get().baseUri();
 		}
 		catch ( IOException e ) {
 			// TODO Auto-generated catch block
