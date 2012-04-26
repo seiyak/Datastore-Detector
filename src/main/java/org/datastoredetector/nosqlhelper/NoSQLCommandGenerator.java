@@ -25,6 +25,12 @@ public class NoSQLCommandGenerator {
 			return extensionFinder.extractPathWithoutExtensionFrom( noSQLServerPath ) + File.separator + "bin"
 					+ File.separator + "cassandra -f";
 		}
+		else if ( noSQLServerPath.getName().contains( "voldemort" ) ) {
+			String commandPath = extensionFinder.extractPathWithoutExtensionFrom( noSQLServerPath );
+
+			return commandPath + File.separator + "bin" + File.separator + "voldemort-server.sh " + commandPath
+					+ File.separator + "config" + File.separator + "test_config1";
+		}
 
 		throw new RuntimeException( "currently the specified NoSQL is not supported," + noSQLServerPath.getName() );
 	}

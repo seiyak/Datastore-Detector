@@ -9,6 +9,7 @@ import java.io.File;
 
 import org.datastoredetector.nosqlhelper.NoSQLCommandGenerator;
 import org.datastoredetector.nosqlhelper.NoSQLExtensionFinder;
+import org.datastoredetector.nosqllinkfinder.impl.VoldemortLinkFinder;
 import org.datastoredetector.nosqlloader.NoSQLLoader;
 import org.datastoredetector.nosqlloader.impl.NoSQLLoaderImpl;
 import org.datastoredetector.nosqlremover.impl.NoSQLRemoverImpl;
@@ -64,6 +65,20 @@ public class NoSQLCommandGeneratorTest {
 		assertTrue( new NoSQLRemoverImpl( new File( NoSQLLoaderTest.TEST_CASSANDRA_DOWNLOADED_PATH ) )
 				.removeNoSQL( null ) );
 		assertFalse( new File( NoSQLLoaderTest.TEST_CASSANDRA_DOWNLOADED_PATH ).exists() );
+	}
+
+	@Test
+	public void testGenerateCommandForVoldemort() {
+		NoSQLLoader voldemortLoader = new NoSQLLoaderImpl( NoSQLLoaderTest.TEST_VOLDEMORT_DOWNLOADED_PATH );
+		File voldemortFile = voldemortLoader.downloadNoSQL( new VoldemortLinkFinder().findDownloadLinkFor( "" ) );
+		assertNotNull( voldemortFile );
+		String voldemortPath = extensionFinder.extractPathWithoutExtensionFrom( voldemortFile );
+		String voldemortCommand = commandGenerator.generateCommandFor( voldemortFile );
+		assertEquals( voldemortCommand, voldemortPath + File.separator + "bin" + File.separator
+				+ "voldemort-server.sh " + voldemortPath + File.separator + "config" + File.separator + "test_config1" );
+		assertTrue( new NoSQLRemoverImpl( new File( NoSQLLoaderTest.TEST_VOLDEMORT_DOWNLOADED_PATH ) )
+				.removeNoSQL( null ) );
+		assertFalse( new File( NoSQLLoaderTest.TEST_VOLDEMORT_DOWNLOADED_PATH ).exists() );
 	}
 
 	@After
