@@ -3,7 +3,6 @@ package org.datastoredetector.nosqlextractor.impl;
 import java.io.BufferedWriter;
 import java.io.CharArrayWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -90,7 +89,10 @@ public class NoSQLExtractorImpl implements NoSQLExtractor {
 
 					try {
 						System.out.println( "directory: " + f.getCanonicalPath() + " " + f.getEnclEntryName() );
-						new File( dirLocation + File.separator + f.getEnclEntryName() ).mkdirs();
+						System.out.println( dirLocation + File.separator + f.getEnclEntryName() + " "
+								+ new File( dirLocation + File.separator + f.getEnclEntryName() ).mkdirs() );
+
+						// // TODO Need to extract if the file is another compressed file
 					}
 					catch ( IOException e ) {
 						// TODO Auto-generated catch block
@@ -103,10 +105,8 @@ public class NoSQLExtractorImpl implements NoSQLExtractor {
 			}
 		}
 		else {
-			FileInputStream in = null;
 			FileOutputStream out = null;
 			try {
-				in = new FileInputStream( entry.getInnerArchive() );
 				System.out.println( "file: " + entry.getEnclEntryName() + " " + entry.getCanOrAbsPath() + " "
 						+ entry.isFile() );
 				Reader reader = new TFileReader( entry );
@@ -118,6 +118,9 @@ public class NoSQLExtractorImpl implements NoSQLExtractor {
 				try {
 					while ( ( n = reader.read( buffer ) ) != -1 ) {
 						System.out.println( "n read: " + n );
+						if ( n == 0 ) {
+							break;
+						}
 					}
 
 					writer = new CharArrayWriter();
@@ -145,10 +148,6 @@ public class NoSQLExtractorImpl implements NoSQLExtractor {
 			}
 			finally {
 				try {
-					if ( in != null ) {
-						in.close();
-					}
-
 					if ( out != null ) {
 						out.close();
 					}

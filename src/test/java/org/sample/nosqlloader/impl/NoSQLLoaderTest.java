@@ -20,8 +20,9 @@ public class NoSQLLoaderTest {
 	public static final String TEST_REDIS_URL1 = "http://redis.googlecode.com/files/redis-2.4.11.tar.gz";
 	public static final String TEST_REDIS_DOWNLOADED_PATH = System.getProperty( "user.home" ) + File.separator
 			+ "redis-2.4.11.tar.gz";
+	public static final String VOLDEMORT_VERSION = "voldemort-0.90.1";
 	public static final String TEST_VOLDEMORT_DOWNLOADED_PATH = System.getProperty( "user.home" ) + File.separator
-			+ "voldemort-0.90.1.zip";
+			+ VOLDEMORT_VERSION + ".zip";
 
 	@Test
 	public void testDownloadNoSQLWithoutTimeoutForCassandra() {
