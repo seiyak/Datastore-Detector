@@ -28,7 +28,7 @@ public class NoSQLExecutorImpl implements NoSQLExecutor {
 	public Process execute(File noSQLServerPath) {
 		boolean propertySet = propertyChecker.checkPropertyOn( this, "noSQLServerPath" );
 		if ( !propertySet && noSQLServerPath == null ) {
-			throw new RuntimeException( "NoSQL server path is invalid," + noSQLServerPath.getAbsolutePath() );
+			throw new RuntimeException( "NoSQL server path is invalid" );
 		}
 
 		if ( propertySet && noSQLServerPath != null ) {
