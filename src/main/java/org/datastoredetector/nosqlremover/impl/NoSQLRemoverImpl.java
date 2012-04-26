@@ -84,34 +84,15 @@ public class NoSQLRemoverImpl implements NoSQLRemover {
 	}
 
 	private boolean remove(File extractedNoSQL) {
-		int lastIndex = -1;
-		String osName = System.getProperty( "os.name" );
-		if ( osName.startsWith( "Linux" ) ) {
-			lastIndex = extensionFinder.findTgzExtensionFrom( extractedNoSQL );
-			if ( lastIndex == -1 ) {
-				lastIndex = extensionFinder.findTarGzExtensionFrom( extractedNoSQL );
-			}
-
-			if ( lastIndex == -1 ) {
-				throw new RuntimeException(
-						"the downloaded file extension is not right. please download with '.tar.gz' or '.tgz' for your OS,"
-								+ osName );
-			}
-
-			return executeRemove( extractedNoSQL, lastIndex );
-
+		int lastIndex = extensionFinder.findTgzExtensionFrom( extractedNoSQL );
+		if ( lastIndex == -1 ) {
+			lastIndex = extensionFinder.findTarGzExtensionFrom( extractedNoSQL );
 		}
-		else if ( osName.startsWith( "Windows" ) ) {
+		if ( lastIndex == -1 ) {
 			lastIndex = extensionFinder.findZipExtensionFrom( extractedNoSQL );
-			if ( lastIndex == -1 ) {
-				throw new RuntimeException(
-						"the downloaded file extension is not right. please download with '.zip' for your OS," + osName );
-			}
-
-			return executeRemove( extractedNoSQL, lastIndex );
 		}
 
-		return false;
+		return executeRemove( extractedNoSQL, lastIndex );
 	}
 
 	private boolean executeRemove(File extractedNoSQL, int lastIndex) {
