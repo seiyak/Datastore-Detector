@@ -12,6 +12,7 @@ public class NoSQLExecutorImpl implements NoSQLExecutor {
 	private File noSQLServerPath;
 	private final NoSQLPropertyChecker propertyChecker;
 	private final NoSQLCommandGenerator commandGenerator;
+	private String noSQLCommand;
 
 	public NoSQLExecutorImpl() {
 		propertyChecker = new NoSQLPropertyChecker();
@@ -45,12 +46,12 @@ public class NoSQLExecutorImpl implements NoSQLExecutor {
 	private Process executeNoSQLServer(File noSQLServerPath) {
 		Process p = null;
 		try {
-			String noSQLCommand = commandGenerator.generateCommandFor( noSQLServerPath );
-			System.out.println( "about to start '" + noSQLCommand  + "'");
+			noSQLCommand = commandGenerator.generateCommandFor( noSQLServerPath );
+			System.out.println( "about to start '" + noSQLCommand + "'" );
 			p = Runtime.getRuntime().exec( noSQLCommand );
 
 			if ( p != null ) {
-				System.out.println( "'" +noSQLCommand + "' started successfully" );
+				System.out.println( "'" + noSQLCommand + "' started successfully" );
 			}
 		}
 		catch ( IOException e ) {
@@ -63,6 +64,7 @@ public class NoSQLExecutorImpl implements NoSQLExecutor {
 	public void stop(Process p) {
 		if ( p != null ) {
 			p.destroy();
+			System.out.println( "'" + noSQLCommand + "' terminated successfully" );
 			return;
 		}
 
