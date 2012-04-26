@@ -45,7 +45,13 @@ public class NoSQLExecutorImpl implements NoSQLExecutor {
 	private Process executeNoSQLServer(File noSQLServerPath) {
 		Process p = null;
 		try {
-			p = Runtime.getRuntime().exec( commandGenerator.generateCommandFor( noSQLServerPath ) );
+			String noSQLCommand = commandGenerator.generateCommandFor( noSQLServerPath );
+			System.out.println( "about to start '" + noSQLCommand  + "'");
+			p = Runtime.getRuntime().exec( noSQLCommand );
+
+			if ( p != null ) {
+				System.out.println( "'" +noSQLCommand + "' started successfully" );
+			}
 		}
 		catch ( IOException e ) {
 			e.printStackTrace();
