@@ -18,45 +18,24 @@ public class NoSQLExtractorImplTest {
 	private NoSQLExtractorImpl extractor;
 	private File downloadedFile;
 
-	@Before
-	public void setUp() throws Exception {
+	@Test
+	public void testRemoveExtractedNoSQL() {
 		downloadedFile = new NoSQLLoaderImpl( NoSQLLoaderTest.TEST_MONGO_DOWNLOADED_PATH )
 				.downloadNoSQL( NoSQLLoaderTest.TEST_MONGO_URL1 );
 		extractor = new NoSQLExtractorImpl( downloadedFile );
-	}
-
-	@Test
-	public void testExtractNoSQL() {
-		List<File> list = extractor.extractNoSQL( downloadedFile );
-		assertFalse( list.isEmpty() );
-	}
-
-	@Test
-	public void testRemoveExtractedNoSQL() {
 		List<File> list = extractor.extractNoSQL( downloadedFile );
 		assertTrue( extractor.removeExtractedNoSQL( null ) );
 	}
 
 	@Test
-	public void testEachProcessFromExtractToRemove() {
-		List<File> list = extractor.extractNoSQL( downloadedFile );
-		NoSQLExecutorImpl executor = new NoSQLExecutorImpl();
-		executor.execute( downloadedFile );
-		extractor.removeExtractedNoSQL( null );
-	}
-
-	@Test
 	public void testEachProcessFromExtractToStop() {
+		downloadedFile = new NoSQLLoaderImpl( NoSQLLoaderTest.TEST_MONGO_DOWNLOADED_PATH )
+				.downloadNoSQL( NoSQLLoaderTest.TEST_MONGO_URL1 );
+		extractor = new NoSQLExtractorImpl( downloadedFile );
 		List<File> list = extractor.extractNoSQL( downloadedFile );
 		NoSQLExecutorImpl executor = new NoSQLExecutorImpl();
 		Process p = executor.execute( downloadedFile );
-		extractor.removeExtractedNoSQL( null );
 		executor.stop( p );
+		assertTrue( extractor.removeExtractedNoSQL( null ) );
 	}
-
-	@After
-	public void tearDown() throws Exception {
-		System.out.println( "deleted ? " + new File( NoSQLLoaderTest.TEST_MONGO_DOWNLOADED_PATH ).delete() );
-	}
-
 }
