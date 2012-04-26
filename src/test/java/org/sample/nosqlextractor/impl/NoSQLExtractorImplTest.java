@@ -25,6 +25,7 @@ public class NoSQLExtractorImplTest {
 		extractor = new NoSQLExtractorImpl( downloadedFile );
 		List<File> list = extractor.extractNoSQL( downloadedFile );
 		assertTrue( extractor.removeExtractedNoSQL( null ) );
+		assertFalse( new File( NoSQLLoaderTest.TEST_MONGO_DOWNLOADED_PATH ).exists() );
 	}
 
 	@Test
@@ -37,5 +38,6 @@ public class NoSQLExtractorImplTest {
 		Process p = executor.execute( downloadedFile );
 		executor.stop( p );
 		assertTrue( extractor.removeExtractedNoSQL( null ) );
+		assertFalse( new File( NoSQLLoaderTest.TEST_MONGO_DOWNLOADED_PATH ).exists() );
 	}
 }

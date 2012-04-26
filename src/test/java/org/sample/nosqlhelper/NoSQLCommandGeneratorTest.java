@@ -1,6 +1,7 @@
 package org.sample.nosqlhelper;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -10,6 +11,7 @@ import org.datastoredetector.nosqlhelper.NoSQLCommandGenerator;
 import org.datastoredetector.nosqlhelper.NoSQLExtensionFinder;
 import org.datastoredetector.nosqlloader.NoSQLLoader;
 import org.datastoredetector.nosqlloader.impl.NoSQLLoaderImpl;
+import org.datastoredetector.nosqlremover.impl.NoSQLRemoverImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +20,7 @@ import org.sample.nosqlloader.impl.NoSQLLoaderTest;
 public class NoSQLCommandGeneratorTest {
 
 	private NoSQLCommandGenerator commandGenerator;
-	NoSQLExtensionFinder extensionFinder;
+	private NoSQLExtensionFinder extensionFinder;
 
 	@Before
 	public void setUp() throws Exception {
@@ -35,7 +37,8 @@ public class NoSQLCommandGeneratorTest {
 		String mongoCommand = commandGenerator.generateCommandFor( mongoFile );
 		assertEquals( mongoCommand, mongoPath + File.separator + "bin" + File.separator + "mongod --dbpath "
 				+ mongoPath );
-		assertTrue( new File( NoSQLLoaderTest.TEST_MONGO_DOWNLOADED_PATH ).delete() );
+		assertTrue( new NoSQLRemoverImpl( new File( NoSQLLoaderTest.TEST_MONGO_DOWNLOADED_PATH ) ).removeNoSQL( null ) );
+		assertFalse( new File( NoSQLLoaderTest.TEST_MONGO_DOWNLOADED_PATH ).exists() );
 	}
 
 	@Test
@@ -46,7 +49,8 @@ public class NoSQLCommandGeneratorTest {
 		String redisPath = extensionFinder.extractPathWithoutExtensionFrom( redisFile );
 		String redisCommand = commandGenerator.generateCommandFor( redisFile );
 		assertEquals( redisCommand, redisPath + File.separator + "src" + File.separator + "redis-server" );
-		assertTrue( new File( NoSQLLoaderTest.TEST_REDIS_DOWNLOADED_PATH ).delete() );
+		assertTrue( new NoSQLRemoverImpl( new File( NoSQLLoaderTest.TEST_REDIS_DOWNLOADED_PATH ) ).removeNoSQL( null ) );
+		assertFalse( new File( NoSQLLoaderTest.TEST_REDIS_DOWNLOADED_PATH ).exists() );
 	}
 
 	@Test
@@ -57,7 +61,9 @@ public class NoSQLCommandGeneratorTest {
 		String cassandraPath = extensionFinder.extractPathWithoutExtensionFrom( cassandraFile );
 		String cassandraCommand = commandGenerator.generateCommandFor( cassandraFile );
 		assertEquals( cassandraCommand, cassandraPath + File.separator + "bin" + File.separator + "cassandra -f" );
-		assertTrue( new File( NoSQLLoaderTest.TEST_CASSANDRA_DOWNLOADED_PATH ).delete() );
+		assertTrue( new NoSQLRemoverImpl( new File( NoSQLLoaderTest.TEST_CASSANDRA_DOWNLOADED_PATH ) )
+				.removeNoSQL( null ) );
+		assertFalse( new File( NoSQLLoaderTest.TEST_CASSANDRA_DOWNLOADED_PATH ).exists() );
 	}
 
 	@After
