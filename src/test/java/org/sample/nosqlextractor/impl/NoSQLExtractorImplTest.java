@@ -40,6 +40,16 @@ public class NoSQLExtractorImplTest {
 	}
 
 	@Test
+	public void testRemoveExtractedNoSQLForRedis() {
+		downloadedFile = new NoSQLLoaderImpl( NoSQLLoaderTest.TEST_REDIS_DOWNLOADED_PATH )
+				.downloadNoSQL( NoSQLLoaderTest.TEST_REDIS_URL1 );
+		extractor = new NoSQLExtractorImpl( downloadedFile );
+		List<File> list = extractor.extractNoSQL( downloadedFile );
+		assertTrue( extractor.removeExtractedNoSQL( null ) );
+		assertFalse( new File( NoSQLLoaderTest.TEST_REDIS_DOWNLOADED_PATH ).exists() );
+	}
+
+	@Test
 	public void testEachProcessFromExtractToStopForMongoDB() {
 		downloadedFile = new NoSQLLoaderImpl( NoSQLLoaderTest.TEST_MONGO_DOWNLOADED_PATH )
 				.downloadNoSQL( NoSQLLoaderTest.TEST_MONGO_URL1 );
@@ -63,5 +73,18 @@ public class NoSQLExtractorImplTest {
 		executor.stop( p );
 		assertTrue( extractor.removeExtractedNoSQL( null ) );
 		assertFalse( new File( NoSQLLoaderTest.TEST_VOLDEMORT_DOWNLOADED_PATH ).exists() );
+	}
+
+	@Test
+	public void testEachProcessFromExtractToStopForRedis() {
+		downloadedFile = new NoSQLLoaderImpl( NoSQLLoaderTest.TEST_REDIS_DOWNLOADED_PATH )
+				.downloadNoSQL( NoSQLLoaderTest.TEST_REDIS_URL1 );
+		extractor = new NoSQLExtractorImpl( downloadedFile );
+		List<File> list = extractor.extractNoSQL( downloadedFile );
+		NoSQLExecutorImpl executor = new NoSQLExecutorImpl();
+		Process p = executor.execute( downloadedFile );
+		executor.stop( p );
+		assertTrue( extractor.removeExtractedNoSQL( null ) );
+		assertFalse( new File( NoSQLLoaderTest.TEST_REDIS_DOWNLOADED_PATH ).exists() );
 	}
 }
