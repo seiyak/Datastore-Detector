@@ -47,6 +47,19 @@ public class NoSQLExecutorImpl implements NoSQLExecutor {
 		Process p = null;
 		try {
 			noSQLCommand = commandGenerator.generateCommandFor( noSQLServerPath );
+
+			if ( noSQLCommand.contains( "redis" ) ) {
+				System.out.println( "about to start 'make'" );
+				Process proc = Runtime.getRuntime().exec( "make", null,
+						commandGenerator.generateCWDForMake( noSQLServerPath ) );
+				try {
+					proc.waitFor();
+				}
+				catch ( InterruptedException e ) {
+					System.out.println( "'make' command for redis done" );
+				}
+			}
+
 			System.out.println( "about to start '" + noSQLCommand + "'" );
 			p = Runtime.getRuntime().exec( noSQLCommand );
 

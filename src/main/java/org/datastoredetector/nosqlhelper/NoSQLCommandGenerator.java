@@ -34,4 +34,8 @@ public class NoSQLCommandGenerator {
 
 		throw new RuntimeException( "currently the specified NoSQL is not supported," + noSQLServerPath.getName() );
 	}
+
+	public File generateCWDForMake(File noSQLServerPath) {
+		return new File( extensionFinder.extractPathWithoutExtensionFrom( noSQLServerPath ) + File.separator + "src" );
+	}
 }
